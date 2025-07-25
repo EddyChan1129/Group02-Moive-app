@@ -1,7 +1,15 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, Alert, ScrollView } from 'react-native';
-import { firestore } from '../config/firebaseConfig';
-import { doc, setDoc } from 'firebase/firestore';
-import { userAuthentication } from '../config/userAuthentication';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ScrollView,
+} from "react-native";
+import { firestore } from "../config/firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
+import { userAuthentication } from "../config/userAuthentication";
 
 const MovieDetailScreen = ({ route }) => {
   const { movie } = route.params;
@@ -10,10 +18,13 @@ const MovieDetailScreen = ({ route }) => {
   const addBookmark = async () => {
     if (user) {
       try {
-        await setDoc(doc(firestore, `users/${user.uid}/bookmarks`, movie.id.toString()), movie);
-        Alert.alert('Success', 'Movie bookmarked!');
+        await setDoc(
+          doc(firestore, `users/${user.uid}/bookmarks`, movie.id.toString()),
+          movie,
+        );
+        Alert.alert("Success", "Movie bookmarked!");
       } catch (error) {
-        Alert.alert('Error', 'Could not bookmark movie.');
+        Alert.alert("Error", "Could not bookmark movie.");
       }
     }
   };
@@ -26,7 +37,9 @@ const MovieDetailScreen = ({ route }) => {
       />
       <View style={styles.infoContainer}>
         <Text style={styles.title}>{movie.title}</Text>
-        <Text style={styles.releaseDate}>Release Date: {movie.release_date}</Text>
+        <Text style={styles.releaseDate}>
+          Release Date: {movie.release_date}
+        </Text>
         <Text style={styles.rating}>Rating: {movie.vote_average} / 10</Text>
         <Text style={styles.overview}>{movie.overview}</Text>
         <TouchableOpacity style={styles.bookmarkButton} onPress={addBookmark}>
@@ -40,10 +53,10 @@ const MovieDetailScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   poster: {
-    width: '100%',
+    width: "100%",
     height: 500,
   },
   infoContainer: {
@@ -51,17 +64,17 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 26,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   releaseDate: {
     fontSize: 16,
-    color: '#555',
+    color: "#555",
     marginBottom: 5,
   },
   rating: {
     fontSize: 16,
-    color: '#555',
+    color: "#555",
     marginBottom: 20,
   },
   overview: {
@@ -70,15 +83,15 @@ const styles = StyleSheet.create({
   },
   bookmarkButton: {
     marginTop: 20,
-    backgroundColor: '#007BFF',
+    backgroundColor: "#007BFF",
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    alignItems: "center",
   },
   bookmarkButtonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
 });
 

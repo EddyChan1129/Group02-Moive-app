@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-import { firestore } from '../config/firebaseConfig';
-import { collection, getDocs, deleteDoc, doc, onSnapshot } from 'firebase/firestore';
-import { userAuthentication } from '../config/userAuthentication';
-import { useNavigation } from '@react-navigation/native';
+import { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+} from "react-native";
+import { firestore } from "../config/firebaseConfig";
+import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import { userAuthentication } from "../config/userAuthentication";
+import { useNavigation } from "@react-navigation/native";
 
 const BookmarkScreen = () => {
   const { user } = userAuthentication();
@@ -12,17 +19,25 @@ const BookmarkScreen = () => {
 
   useEffect(() => {
     if (user) {
-      const unsubscribe = onSnapshot(collection(firestore, `users/${user.uid}/bookmarks`), (querySnapshot) => {
-        const bookmarkedMovies = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setBookmarks(bookmarkedMovies);
-      });
+      const unsubscribe = onSnapshot(
+        collection(firestore, `users/${user.uid}/bookmarks`),
+        (querySnapshot) => {
+          const bookmarkedMovies = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setBookmarks(bookmarkedMovies);
+        },
+      );
       return () => unsubscribe();
     }
   }, [user]);
 
   const removeBookmark = async (movieId) => {
     if (user) {
-      await deleteDoc(doc(firestore, `users/${user.uid}/bookmarks`, movieId.toString()));
+      await deleteDoc(
+        doc(firestore, `users/${user.uid}/bookmarks`, movieId.toString()),
+      );
       Alert.alert("Success", "Bookmark removed");
     }
   };
@@ -33,9 +48,17 @@ const BookmarkScreen = () => {
       <FlatList
         data={bookmarks}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.navigate('MovieDetailScreen', { movie: item })} style={styles.bookmarkItem}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("MovieDetailScreen", { movie: item })
+            }
+            style={styles.bookmarkItem}
+          >
             <Text style={styles.movieTitle}>{item.title}</Text>
-            <TouchableOpacity onPress={() => removeBookmark(item.id)} style={styles.deleteButton}>
+            <TouchableOpacity
+              onPress={() => removeBookmark(item.id)}
+              style={styles.deleteButton}
+            >
               <Text style={styles.deleteButtonText}>Remove</Text>
             </TouchableOpacity>
           </TouchableOpacity>
@@ -50,29 +73,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
-    textAlign: 'center',
-    color: '#333',
+    textAlign: "center",
+    color: "#333",
   },
   bookmarkItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     padding: 15,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     marginBottom: 10,
     shadowColor: "#000",
     shadowOffset: {
-        width: 0,
-        height: 1,
+      width: 0,
+      height: 1,
     },
-    shadowOpacity: 0.20,
+    shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
   },
@@ -81,14 +104,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   deleteButton: {
-    backgroundColor: '#DC3545',
+    backgroundColor: "#DC3545",
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 5,
   },
   deleteButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
+    fontWeight: "bold",
   },
 });
 

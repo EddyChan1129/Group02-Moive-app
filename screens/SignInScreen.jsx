@@ -1,93 +1,99 @@
-import { useState } from 'react';
-import { TextInput, View, TouchableOpacity, Text, Alert } from 'react-native';
-import { styles } from '../MyStyle';
-import { FirebaseAuth } from '../config/firebaseConfig';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useState } from "react";
+import { TextInput, View, TouchableOpacity, Text, Alert } from "react-native";
+import { styles } from "../MyStyle";
+import { FirebaseAuth } from "../config/firebaseConfig";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const SignInScreen = ({ navigation }) => {
+  const [userObject, setUserObject] = useState({
+    email: "",
+    password: "",
+    error: "",
+  });
 
-    const [userObject, setUserObject] = useState({
-        email: '',
-        password: '',
-        error: ''
-    });
-
-    async function signIn() {
-        if (userObject.email === '' || userObject.password === '') {
-            setUserObject({
-                ...userObject,
-                error: 'Email and Password are mandatory!'
-            })
-            return
-        }
-
-        try {
-            await signInWithEmailAndPassword(FirebaseAuth, userObject.email, userObject.password)
-                .then((result) => {
-                    Alert.alert("SignIn Successful!", `Welcome ${result.user.email}`)
-                })
-        } catch (error) {
-            setUserObject({
-                ...userObject,
-                error: "Invalid email or password!"
-            })
-        }
+  async function signIn() {
+    if (userObject.email === "" || userObject.password === "") {
+      setUserObject({
+        ...userObject,
+        error: "Email and Password are mandatory!",
+      });
+      return;
     }
 
-    return (
-        <View style={styles.container}>
-            <TextInput
-                style={styles.inputStyle}
-                value={userObject.email}
-                onChangeText={(text) => setUserObject({
-                    ...userObject,
-                    email: text, error: ''
-                })}
-                placeholder='Enter email'
-                placeholderTextColor='#8395a7'
-                keyboardType='email-address'
-                autoCorrect={false}
-                autoCapitalize='none' />
+    try {
+      await signInWithEmailAndPassword(
+        FirebaseAuth,
+        userObject.email,
+        userObject.password,
+      ).then((result) => {
+        Alert.alert("SignIn Successful!", `Welcome ${result.user.email}`);
+      });
+    } catch (error) {
+      setUserObject({
+        ...userObject,
+        error: "Invalid email or password!",
+      });
+    }
+  }
 
-            <TextInput
-                style={styles.inputStyle}
-                value={userObject.password}
-                onChangeText={(text) => setUserObject({
-                    ...userObject,
-                    password: text, error: ''
-                })}
-                placeholder='Enter password'
-                placeholderTextColor='#8395a7'
-                secureTextEntry={true} />
+  return (
+    <View style={styles.container}>
+      <TextInput
+        style={styles.inputStyle}
+        value={userObject.email}
+        onChangeText={(text) =>
+          setUserObject({
+            ...userObject,
+            email: text,
+            error: "",
+          })
+        }
+        placeholder="Enter email"
+        placeholderTextColor="#8395a7"
+        keyboardType="email-address"
+        autoCorrect={false}
+        autoCapitalize="none"
+      />
 
-            {
-                !!userObject.error &&
-                <Text style={styles.errorText}>{userObject.error}</Text>
-            }
+      <TextInput
+        style={styles.inputStyle}
+        value={userObject.password}
+        onChangeText={(text) =>
+          setUserObject({
+            ...userObject,
+            password: text,
+            error: "",
+          })
+        }
+        placeholder="Enter password"
+        placeholderTextColor="#8395a7"
+        secureTextEntry={true}
+      />
 
-            <TouchableOpacity
-                style={styles.buttonStyle}
-                onPress={signIn}
-            >
-                <Text style={styles.buttonText}>Sign In</Text>
-            </TouchableOpacity>
+      {!!userObject.error && (
+        <Text style={styles.errorText}>{userObject.error}</Text>
+      )}
 
-            <View style={styles.authSwitchContainer}>
-                <View style={styles.authSwitchLine} />
-                <Text style={styles.authSwitchText}>OR</Text>
-                <View style={styles.authSwitchLine} />
-            </View>
+      <TouchableOpacity style={styles.buttonStyle} onPress={signIn}>
+        <Text style={styles.buttonText}>Sign In</Text>
+      </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.buttonStyle}
-                onPress={() => {
-                    navigation.navigate("SignUpScreen")
-                }}
-            >
-                <Text style={styles.buttonText}>Sign Up</Text>
-            </TouchableOpacity>
-        </View>
-    );
-}
+      <View style={styles.authSwitchContainer}>
+        <View style={styles.authSwitchLine} />
+        <Text style={styles.authSwitchText}>OR</Text>
+        <View style={styles.authSwitchLine} />
+      </View>
+
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={() => {
+          navigation.navigate("SignUpScreen");
+        }}
+      >
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 
 export default SignInScreen;
