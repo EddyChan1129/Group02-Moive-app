@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { Text, FlatList, TouchableOpacity, SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { signOut } from "firebase/auth";
 import { FirebaseAuth } from "../config/firebaseConfig";
-import { styles as globalStyles } from "../MyStyle";
+import { styles } from "../MyStyle";
 import { fetchTopRatedMovies } from "../api/tmdb";
 import MovieCard from "../components/MovieCard";
 
@@ -21,10 +15,10 @@ const HomeScreen = () => {
     nav.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          style={globalStyles.signOutButton}
+          style={styles.signOutButton}
           onPress={() => signOut(FirebaseAuth)}
         >
-          <Text style={globalStyles.signOutButtonText}>Sign Out</Text>
+          <Text style={styles.signOutButtonText}>Sign Out</Text>
         </TouchableOpacity>
       ),
     });
@@ -38,7 +32,7 @@ const HomeScreen = () => {
   }, [nav]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.homeContainer}>
       <Text style={styles.header}>Top Rated Movies</Text>
       <FlatList
         data={movies}
@@ -47,30 +41,8 @@ const HomeScreen = () => {
         numColumns={2}
         contentContainerStyle={styles.list}
       />
-    </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f0f0f0",
-  },
-  welcomeText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginVertical: 10,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginLeft: 10,
-    marginBottom: 10,
-  },
-  list: {
-    justifyContent: "space-around",
-  },
-});
 
 export default HomeScreen;

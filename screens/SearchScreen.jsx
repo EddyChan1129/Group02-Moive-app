@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, SafeAreaView } from "react-native";
 import SearchBar from "../components/SearchBar";
 import MovieCard from "../components/MovieCard";
 import { searchMovies } from "../api/tmdb";
+import { styles } from "../MyStyle";
 
 const SearchScreen = () => {
   const [movies, setMovies] = useState([]);
@@ -17,7 +18,7 @@ const SearchScreen = () => {
   };
 
   return (
-    <View>
+    <SafeAreaView style={styles.searchContainer}>
       <SearchBar onSearch={handleSearch} />
       <FlatList
         data={movies}
@@ -25,7 +26,7 @@ const SearchScreen = () => {
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

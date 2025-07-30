@@ -4,13 +4,14 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  StyleSheet,
   Alert,
+  SafeAreaView,
 } from "react-native";
 import { firestore } from "../config/firebaseConfig";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import { userAuthentication } from "../config/userAuthentication";
 import { useNavigation } from "@react-navigation/native";
+import { styles } from "../MyStyle";
 
 const BookmarkScreen = () => {
   const { user } = userAuthentication();
@@ -43,8 +44,8 @@ const BookmarkScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>My Bookmarks</Text>
+    <SafeAreaView style={styles.bookmarkContainer}>
+      <Text style={styles.bookmarkTitle}>My Bookmarks</Text>
       <FlatList
         data={bookmarks}
         renderItem={({ item }) => (
@@ -65,54 +66,8 @@ const BookmarkScreen = () => {
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-    </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 10,
-    backgroundColor: "#f0f0f0",
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-    color: "#333",
-  },
-  bookmarkItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 15,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    marginBottom: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-    elevation: 2,
-  },
-  movieTitle: {
-    fontSize: 18,
-    flex: 1,
-  },
-  deleteButton: {
-    backgroundColor: "#DC3545",
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 5,
-  },
-  deleteButtonText: {
-    color: "white",
-    fontWeight: "bold",
-  },
-});
 
 export default BookmarkScreen;

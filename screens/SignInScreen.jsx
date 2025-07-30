@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { TextInput, View, TouchableOpacity, Text, Alert } from "react-native";
-import { styles } from "../MyStyle";
+import {
+  TextInput,
+  View,
+  TouchableOpacity,
+  Text,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+import { styles, COLORS } from "../MyStyle";
 import { FirebaseAuth } from "../config/firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
@@ -37,7 +45,12 @@ const SignInScreen = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <Text style={styles.title}>Welcome Back</Text>
+      <Text style={styles.subtitle}>Sign in to continue</Text>
       <TextInput
         style={styles.inputStyle}
         value={userObject.email}
@@ -49,7 +62,7 @@ const SignInScreen = ({ navigation }) => {
           })
         }
         placeholder="Enter email"
-        placeholderTextColor="#8395a7"
+        placeholderTextColor={COLORS.subtleText}
         keyboardType="email-address"
         autoCorrect={false}
         autoCapitalize="none"
@@ -66,7 +79,7 @@ const SignInScreen = ({ navigation }) => {
           })
         }
         placeholder="Enter password"
-        placeholderTextColor="#8395a7"
+        placeholderTextColor={COLORS.subtleText}
         secureTextEntry={true}
       />
 
@@ -79,20 +92,17 @@ const SignInScreen = ({ navigation }) => {
       </TouchableOpacity>
 
       <View style={styles.authSwitchContainer}>
-        <View style={styles.authSwitchLine} />
-        <Text style={styles.authSwitchText}>OR</Text>
-        <View style={styles.authSwitchLine} />
+        <Text style={styles.authSwitchText}>Don't have an account?</Text>
+        <TouchableOpacity
+          style={styles.authSwitchButton}
+          onPress={() => {
+            navigation.navigate("SignUpScreen");
+          }}
+        >
+          <Text style={styles.authSwitchButtonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity
-        style={styles.buttonStyle}
-        onPress={() => {
-          navigation.navigate("SignUpScreen");
-        }}
-      >
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

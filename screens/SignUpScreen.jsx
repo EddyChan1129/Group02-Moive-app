@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { TextInput, View, TouchableOpacity, Text, Alert } from "react-native";
-import { styles } from "../MyStyle";
+import {
+  TextInput,
+  View,
+  TouchableOpacity,
+  Text,
+  Alert,
+  SafeAreaView,
+} from "react-native";
+import { styles, COLORS } from "../MyStyle";
 import { FirebaseAuth } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
@@ -37,7 +44,7 @@ const SignUpScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <TextInput
         style={styles.inputStyle}
         value={userObject.email}
@@ -49,7 +56,7 @@ const SignUpScreen = () => {
           })
         }
         placeholder="Enter email"
-        placeholderTextColor="#8395a7"
+        placeholderTextColor={COLORS.subtleText}
         keyboardType="email-address"
         autoCorrect={false}
         autoCapitalize="none"
@@ -66,7 +73,7 @@ const SignUpScreen = () => {
           })
         }
         placeholder="Enter password"
-        placeholderTextColor="#8395a7"
+        placeholderTextColor={COLORS.subtleText}
         secureTextEntry={true}
       />
 
@@ -77,7 +84,7 @@ const SignUpScreen = () => {
       <TouchableOpacity style={styles.buttonStyle} onPress={signUp}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
