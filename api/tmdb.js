@@ -1,6 +1,4 @@
-import { TMDB_API_KEY } from "@env";
-
-const API_KEY = TMDB_API_KEY;
+const API_KEY = "c5c72eea73bc7a207b54bfe372dfb198";
 const API_BASE_URL = "https://api.themoviedb.org/3";
 
 export const fetchTopRatedMovies = async () => {

@@ -1,22 +1,14 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import {
-  FIREBASE_API_KEY,
-  FIREBASE_AUTH_DOMAIN,
-  FIREBASE_PROJECT_ID,
-  FIREBASE_STORAGE_BUCKET,
-  FIREBASE_MESSAGING_SENDER_ID,
-  FIREBASE_APP_ID,
-} from "@env";
 
 const firebaseConfig = {
-  apiKey: FIREBASE_API_KEY,
-  authDomain: FIREBASE_AUTH_DOMAIN,
-  projectId: FIREBASE_PROJECT_ID,
-  storageBucket: FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-  appId: FIREBASE_APP_ID,
+  apiKey: "AIzaSyCyOZi5XNjYaLXumYe4MO7Nltldps-MlC4",
+  authDomain: "group2-movie-app.firebaseapp.com",
+  projectId: "group2-movie-app",
+  storageBucket: "group2-movie-app.firebasestorage.app",
+  messagingSenderId: "721730561014",
+  appId: "1:721730561014:web:bd1ca263b61f286c955dd7"
 };
 
 export const app = initializeApp(firebaseConfig);
