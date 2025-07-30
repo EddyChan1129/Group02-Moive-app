@@ -19,7 +19,7 @@ const AppStack = () => {
       }}
     >
       <Stack.Screen
-        name="Main"
+        name="Home"
         component={TabNavigator}
         options={{ headerShown: false }}
       />
